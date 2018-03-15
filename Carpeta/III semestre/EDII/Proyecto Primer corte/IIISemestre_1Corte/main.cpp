@@ -27,9 +27,9 @@ struct Cliente
 {
     int id_Cliente;
     char nombre[20];
-    int cedula[8];
+    int cedula;
     char direccion[20];
-    int telefono[10];
+    int telefono;
 }Cliente[clientes], *P_Clientes=Cliente ;
 
 struct Productos
@@ -172,8 +172,6 @@ void MostrarClientes(int n,int p)
         system("cls");
         printf("Ingrese el Id del Cliente: ");
         scanf("%i",&id);
-        printf("\nCargando informacion....");
-        getch();
         system("cls");
         printf("\n\n\t\tCliente #%i\n\n",id);
         printf("Id: %i\n",(P_Clientes+id)->id_Cliente);
@@ -190,9 +188,17 @@ void MostrarClientes(int n,int p)
             MostrarClientes(n,p);
         }else if(opcion==2)
         {
+        	printf("\n\n");
+        	printf("Presione una tecla para salir...\n");
+        	getch();
             system("cls");
             Menu(n,p);
-        }else
+        }  else if(opcion==3)
+        {
+            system("cls");
+            Menu(n,p);
+        }
+        else
         {
             printf("\n\nError, Presione una tecla para volver al Menu...");
             getch();
@@ -203,9 +209,9 @@ void MostrarClientes(int n,int p)
         Menu(n,p);
         break;
     case 2:
-        for(i=0;i<n;i++)
+        for(i=1;i<=n;i++)
         {
-            printf("\t\tCliente #%i\n",i+1);
+            printf("\t\tCliente #%i\n",i);
             printf("\n\nId: %i\n",(P_Clientes+i)->id_Cliente);
             printf("Cedula: %i\n",(P_Clientes+i)->cedula);
             printf("Nombre: %s\n",(P_Clientes+i)->nombre);
@@ -257,10 +263,10 @@ void CrearClientes(int n,int p)
     switch(opcion1)
     {
     case 1:
-        for(i=0;i<n;i++)
+        for(i=1;i<=n;i++)
         {
-           printf("\t\tCliente #%i\n\n",i+1);
-           (P_Clientes+i)->id_Cliente=i+1;
+           printf("\t\tCliente #%i\n\n",i);
+           (P_Clientes+i)->id_Cliente=i;
            printf("Id: %i\n",(P_Clientes+i)->id_Cliente);
            fflush(stdin);
            printf("Nombre: ");
@@ -302,7 +308,7 @@ void CrearClientes(int n,int p)
         printf("Posicion: ");
         scanf("%i",&posicion);
         system("cls");
-        for(i=posicion;i<n;i++)
+        for(i=posicion;i<=n;i++)
         {
             (P_Clientes+i)->id_Cliente=i;
             fflush(stdin);
@@ -355,41 +361,111 @@ void CrearClientes(int n,int p)
 
 void ModificarCliente(int n,int p)
 {
-    int id,opcion;
+    int id,opcion,opcion1;
     printf("Que cliente ingresado desea modificar?\n");
     printf("Id: ");
     scanf("%i",&id);
-    printf("\t\tCliente #%i\n\n",id);
-    printf("Ingrese Cedula: ");
-    scanf("%i",&(P_Clientes+id)->cedula);
-    fflush(stdin);
-    printf("Ingrese Nombre: ");
-    fgets((P_Clientes+id)->nombre,30,stdin);
-    fflush(stdin);
-    printf("Ingrese Direccion: ");
-    fgets((P_Clientes+id)->direccion,20,stdin);
-    printf("Ingrese el telefono: ");
-    scanf("%i",&(P_Clientes+id)->telefono);
-    fflush(stdin);
-    printf("\n\nCambiado con exito....");
-    printf("\n\nDesea Modificar otro cliente? 1.Si 2.No\n");
-    printf("Opcion: ");
-    scanf("%i",&opcion);
-    if(opcion==1)
+    system("cls");
+    printf("\nDesea Modificar algo en especifico?\n");
+    printf("1. Cambiar todo el contenido del cliente\n");
+    printf("2. Cambiar un dato en especifico.\n");
+    printf("3. Volver al Menu.");
+    printf("\nOpcion: ");
+    scanf("%i",&opcion1);
+    system("cls");
+    switch(opcion1)
     {
-        system("cls");
-        ModificarCliente(n,p);
-    }else if(opcion==2)
-    {
-        printf("\n\nPresione una tecla para volver al Menu...");
-        getch();
+    case 1:
+        printf("\t\tCliente #%i\n\n",id);
+        printf("Ingrese Cedula: ");
+        scanf("%i",&(P_Clientes+id)->cedula);
+        fflush(stdin);
+        printf("Ingrese Nombre: ");
+        fgets((P_Clientes+id)->nombre,30,stdin);
+        fflush(stdin);
+        printf("Ingrese Direccion: ");
+        fgets((P_Clientes+id)->direccion,20,stdin);
+        printf("Ingrese el telefono: ");
+        scanf("%i",&(P_Clientes+id)->telefono);
+        fflush(stdin);
+        printf("\n\nCambiado con exito....");
+        printf("\n\nDesea Modificar otro cliente? 1.Si 2.No\n");
+        printf("Opcion: ");
+        scanf("%i",&opcion);
+        if(opcion==1)
+        {
+            system("cls");
+            ModificarCliente(n,p);
+        }else if(opcion==2)
+        {
+            printf("\n\nPresione una tecla para volver al Menu...");
+            getch();
+            system("cls");
+            Menu(n,p);
+        }
+        system("Pause");
         system("cls");
         Menu(n,p);
+        break;
+    case 2:
+        printf("\t------------------------------------\n");
+        printf("\t|         MENU MODIFICACION        |\n");
+        printf("\t|----------------------------------|\n");
+        printf("\t|           1.Nombre               |\n");
+        printf("\t|           2.Cedula               |\n");
+        printf("\t|          3.Direccion             |\n");
+        printf("\t|          4.Telefono              |\n");
+        printf("\t|           5. Salir               |\n");
+        printf("\t------------------------------------\n");
+        printf("Opcion: ");
+        scanf("%i",&opcion1);
+        printf("\n\n");
+        switch(opcion1)
+        {
+        case 1:
+            printf("Ingrese el nombre: ");
+            fgets((P_Clientes+id)->nombre,30,stdin);
+            printf("\n\nInformacion cambiada con exito....\n");
+            getch();
+            system("cls");
+            Menu(n,p);
+            break;
+        case 2:
+            printf("Ingrese la cedula: ");
+            scanf("%i",&(P_Clientes+id)->cedula);
+            printf("\n\nInformacion cambiada con eexito....");
+            getch();
+            system("cls");
+            Menu(n,p);
+        case 3:
+            printf("Ingrese la direccion: ");
+            fgets((P_Clientes+id)->direccion,30,stdin);
+            printf("\n\nInformacion cambiada con exito....\n");
+            getch();
+            system("cls");
+            Menu(n,p);
+            break;
+        case 4:
+            printf("Ingrese la cedula: ");
+            scanf("%i",&(P_Clientes+id)->cedula);
+            printf("\n\nInformacion cambiada con eexito....");
+            getch();
+            system("cls");
+            Menu(n,p);
+            break;
+        case 5:
+            system("cls");
+            Menu(n,p);
+            break;
+        default:
+            printf("\n\nError de sintaxis..");
+            ModificarCliente(n,p);
+        }
+
+
     }
-    system("Pause");
-    system("cls");
-    Menu(n,p);
 }
+
 
 void VisualizarProductos(int n,int p)
 {
@@ -475,10 +551,11 @@ void CrearProductos(int n, int p)
     switch(opcion1)
     {
     case 1:
-        for(i=0;i<p;i++)
+        for(i=1;i<=p;i++)
         {
-            printf("\t\t Producto #%i\n\n",i+1);
-            (P_Productos+i)->id_Productos=i+1;
+            printf("\t\t Producto #%i\n\n",i);
+            (P_Productos+i)->id_Productos=i;
+            fflush(stdin);
             printf("Nombre: ");
             fgets((P_Productos+i)->nombre,30,stdin);
             fflush(stdin);
@@ -510,10 +587,10 @@ void CrearProductos(int n, int p)
         printf("Posicion: ");
         scanf("%i",&posicion);
         system("cls");
-        for(i=0;i<p;i++)
+        for(i=1;i<=p;i++)
         {
-            printf("\t\t Producto #%i\n\n",i+1);
-            (P_Productos+i)->id_Productos=i+1;
+            printf("\t\t Producto #%i\n\n",i);
+            (P_Productos+i)->id_Productos=i;
             printf("Nombre: ");
             fgets((P_Productos+i)->nombre,30,stdin);
             fflush(stdin);
@@ -559,7 +636,8 @@ void ModificarProducto(int n,int p)
     printf("Ingrese el Id del producto que desea modificar: ");
     scanf("%i",&id);
     system("cls");
-    printf("\t\t Producto #%i\n");
+    printf("\t\t Producto #%i\n",id);
+    fflush(stdin);
     printf("Nombre: ");
     fgets((P_Productos+id)->nombre,30,stdin);
     fflush(stdin);
@@ -609,7 +687,7 @@ void CrearFactura(int n,int p)
     {
     case 1:
         printf("\t------------------------------------------\n");
-        for(i=l;i<cantidadFacturas;i++)
+        for(i=l;i<=cantidadFacturas;i++)
         {
             printf("Ingrese el ID del Cliente\n");
             scanf("%i",&id);
@@ -622,16 +700,22 @@ void CrearFactura(int n,int p)
                 }
             }
             strcpy((P_Factura+i)->cliente, (P_Clientes+j)->nombre);
-            printf("Ingrese el id del producto que compra %s\n",(P_Factura+i)->cliente);
+            printf("Ingrese el id del producto que compra %s:\n",(P_Factura+i)->cliente);
             printf("Id: ");
             scanf("%i",&idProducto);
             strcpy((P_Factura+i)->producto,(P_Productos+idProducto)->nombre);
-            printf("Ingrese la cantidad de %s que va a comprar %s.\n",(P_Productos+idProducto)->nombre,(P_Clientes+j)->nombre);
+            printf("Ingrese la cantidad de %s que va a comprar %s:\n",(P_Productos+idProducto)->nombre,(P_Clientes+j)->nombre);
             scanf("%i",&cantidadProductos);
             (P_Factura+i)->cantidad=cantidadProductos;
             (P_Factura+i)->valor=(P_Productos+idProducto)->Valor * cantidadProductos;
-            printf("\n\nIngrese el estado de la compra.\n",(P_Clientes+j)->nombre);
+            printf("\n\nIngrese el estado de la compra? 1.Pagado 2.No pagado\n",(P_Clientes+j)->nombre);
             scanf("%i",&(P_Factura+i)->estado);
+            if((P_Factura+i)->estado>=3 || (P_Factura+i)->estado<=0)
+            {
+                printf("\n\nError...");
+                getch();
+                l--;
+            }
             l++;
             printf("\n\nGuardada con exito...");
             printf("Desea continuar? 1.Si 2.No\n");
@@ -660,7 +744,7 @@ void CrearFactura(int n,int p)
     case 2:
         for(i=l;i<cantidadFacturas;i++)
         {
-            (P_Factura+i)->id=i+1;
+            (P_Factura+i)->id=i;
             fflush(stdin);
             printf("Ingrese el nombre del cliente:\n");
             fgets((P_Factura+i)->cliente,30,stdin);
@@ -714,7 +798,7 @@ void MostrarFacturas(int n, int p)
         printf("\t\t FACTURA #%i\n\n",numero);
         printf("Id Factura: %i\n",(P_Factura+numero)->id);
         printf("Cantidad: %i\n",(P_Factura+numero)->cantidad);
-        printf("Valor Producto   -->%.1f\n",(P_Factura+numero)->valor);
+        printf("Valor Producto %i x %.1f  -->%.1f\n",(P_Factura+numero)->cantidad,(P_Productos+numero)->Valor,(P_Factura+numero)->valor);
         printf("Nombre Cliente: %s\n",(P_Factura+numero)->cliente);
         printf("Nombre Producto: %s\n",(P_Factura+numero)->producto);
         printf("Estado= 1.Pagado 2.No pagado\n");
@@ -740,13 +824,13 @@ void MostrarFacturas(int n, int p)
 
     }else if(opcion==2)
     {
-        for(i=0;i<n;i++)
+        for(i=1;i<=n;i++)
         {
         system("cls");
         printf("\t\t FACTURA #%i\n\n",numero);
         printf("Id Factura: %i\n",(P_Factura+i)->id);
         printf("Cantidad: %i\n",(P_Factura+i)->cantidad);
-        printf("Valor Producto   -->%.1f\n",(P_Factura+i)->valor);
+        printf("Valor Producto %i x %.1f  -->%.1f\n",(P_Factura+i)->cantidad,(P_Productos+i)->Valor,(P_Factura+i)->valor);
         printf("Nombre Cliente: %s\n",(P_Factura+i)->cliente);
         printf("Nombre Producto: %s\n",(P_Factura+i)->producto);
         printf("Estado= 1.Pagado 2.No pagado\n");
@@ -800,7 +884,7 @@ void FacturasPagasNoPagas(int n,int p)
     {
     case 1:
         printf("\t\tFACTURAS PAGADAS\n\n");
-        for(i=0;i<n;i++)
+        for(i=1;i<=n;i++)
         {
             if((P_Factura+i)->estado==1)
             {
@@ -834,7 +918,7 @@ void FacturasPagasNoPagas(int n,int p)
         break;
     case 2:
         printf("\t\tFACTURAS NO PAGADAS\n");
-        for(i=0;i<n;i++)
+        for(i=1;i<=n;i++)
         {
             if((P_Factura+i)->estado==0)
             {
@@ -897,7 +981,7 @@ void FacturaCliente(int n, int p)
     case 1:
         printf("Ingrese el ID del cliente: ");
         scanf("%i",&idCliente);
-        for(i=0;i<n;i++)
+        for(i=1;i<=n;i++)
         {
             if(idCliente==(P_Clientes+i)->id_Cliente);
             {
@@ -907,7 +991,7 @@ void FacturaCliente(int n, int p)
         printf("\n\nMostrado con exito....\n\n");
         getch();
         system("cls");
-        for(i=0;i<n;i++)
+        for(i=1;i<=n;i++)
         {
             if(strncmp(nombreCliente,(P_Factura+i)->cliente,30)==0)
             {
